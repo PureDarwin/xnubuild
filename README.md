@@ -11,3 +11,7 @@ At various steps the script will ask you to click enter to continue. If theres n
 ## Options
 
 In the script you can change the location it builds to by changing the `BUILD_DIR` variable.
+
+## Notes
+
+As of right now, the patching only works on Darwin 17.0. This will be updated in the future to support more versions
