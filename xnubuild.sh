@@ -77,7 +77,7 @@ print "Getting dependencies from Apple and PD-Devs"
 	curl -O https://opensource.apple.com/tarballs/libplatform/$LIBPLATFORM_VERISON.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/libdispatch/$LIBDISPATCH_VERSION.tar.gz && \
 	curl -O	https://opensource.apple.com/tarballs/CoreOSMakefiles/$COREOSMAKEFILES_VERISON.tar.gz && \
-	curl -O https://pd-devs.org/patches/libsyscall.patch
+	curl -O https://www.pd-devs.org/patches/libsyscall.patch
 } || {
 	error "Failed to get dependencies from Apple and PD-Devs"
 	exit 1
