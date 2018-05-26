@@ -81,7 +81,11 @@ wait_enter
 print "Extracting dependencies"
 {
 	cd $SCRIPT_DIRECTORY && \
-	for file in *.tar.gz; do tar -zxf $file; done && rm -f *.tar.gz
+	for file in *.tar.gz; do
+		rm -rf $(basename $file .tar.gz)
+		tar -zxf $file
+	done && \
+	rm -f *.tar.gz
 } || {
 	error "Failed to extract dependencies"
 	exit 1
