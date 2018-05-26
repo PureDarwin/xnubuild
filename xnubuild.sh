@@ -4,6 +4,8 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 error=$(tput bold)$(tput setb 1)$(tput setaf 7)
 
+PATCH_DIRECTORY=$(cd `dirname $0` && pwd)/patches
+
 print() {
 	echo "${bold}[$(date +"%T")]${normal} $1"
 }
@@ -25,7 +27,7 @@ print "Setting up macOS OpenSource Build Environment"
 print "Script by PureDarwin, version 1.0"
 print "---"
 
-print "Getting the latest versions and Libsyscall Patch"
+print "Getting the latest versions"
 {
 	VERSION_REGEX="\d+(\.?\d+\.?\d+\.\d+)?"
 	XNU_VERSION=$(curl -s https://opensource.apple.com/tarballs/xnu/ | egrep -o "xnu-$VERSION_REGEX" | sort -V | tail -n 1)
@@ -41,7 +43,7 @@ print "Getting the latest versions and Libsyscall Patch"
 
 
 SDK_ROOT=`xcodebuild -version -sdk macosx Path`
-BUILD_DIR=~/Desktop/xnubuild 
+BUILD_DIR=~/Desktop/xnubuild
 
 # Wait for user input
 function wait_enter {
@@ -69,17 +71,16 @@ print "Going to temporary build directory ($BUILD_DIR)"
 wait_enter
 
 # Curl these files from Opensource.apple.com
-print "Getting dependencies from Apple and PD-Devs"
+print "Getting dependencies from Apple"
 {
 	curl -O https://opensource.apple.com/tarballs/dtrace/$DTRACE_VERSION.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/AvailabilityVersions/$AVAILABILITYVERSIONS_VERSION.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/xnu/$XNU_VERSION.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/libplatform/$LIBPLATFORM_VERISON.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/libdispatch/$LIBDISPATCH_VERSION.tar.gz && \
-	curl -O	https://opensource.apple.com/tarballs/CoreOSMakefiles/$COREOSMAKEFILES_VERISON.tar.gz && \
-	curl -O https://www.pd-devs.org/patches/libsyscall.patch
+	curl -O	https://opensource.apple.com/tarballs/CoreOSMakefiles/$COREOSMAKEFILES_VERISON.tar.gz
 } || {
-	error "Failed to get dependencies from Apple and PD-Devs"
+	error "Failed to get dependencies from Apple"
 	exit 1
 }
 wait_enter
@@ -88,7 +89,7 @@ wait_enter
 print "Extracting dependencies"
 {
 	for file in *.tar.gz; do tar -zxf $file; done && rm -f *.tar.gz
-} || {	
+} || {
 	error "Failed to extract dependencies"
 	exit 1
 }
@@ -104,7 +105,7 @@ print "Installing CoreOSMakefiles"
 	exit 1
 }
 wait_enter
- 
+
 print "Building dtrace"
 {
 	cd $DTRACE_VERSION && \
@@ -137,7 +138,7 @@ print "Installing XNU & LibSyscall headers"
 	cd $XNU_VERSION/ && \
 		mkdir -p BUILD.hdrs/obj BUILD.hdrs/sym BUILD.hdrs/dst && \
 		make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$PWD/BUILD.hdrs/obj SYMROOT=$PWD/BUILD.hdrs/sym DSTROOT=$PWD/BUILD.hdrs/dst && \
-		patch -s -p1 < $PWD/../libsyscall.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/libsyscall.patch && \
 		sudo xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD/libsyscall OBJROOT=$PWD/BUILD.hdrs/obj SYMROOT=$PWD/BUILD.hdrs/sym DSTROOT=$PWD/BUILD.hdrs/dst && \
 		sudo ditto BUILD.hdrs/dst `xcrun -sdk macosx -show-sdk-path` && \
 	cd ..
