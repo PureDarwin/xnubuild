@@ -13,7 +13,7 @@ print() {
 }
 
 error() {
-	echo "${error}[$(date +"%T")] $1"
+	echo "${error}[$(date +"%T")] $1${normal}"
 	exit
 }
 
