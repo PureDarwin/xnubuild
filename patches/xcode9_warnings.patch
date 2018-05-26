@@ -1,0 +1,33 @@
+diff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
+index 653af06..f75aefe 100644
+--- a/makedefs/MakeInc.def
++++ b/makedefs/MakeInc.def
+@@ -143,6 +143,7 @@ WARNFLAGS_STD := \
+ 	-Wno-partial-availability \
+ 	-Wno-pedantic \
+ 	-Wno-shift-sign-overflow \
++	-Wno-strict-prototypes \
+ 	-Wno-switch-enum \
+ 	-Wno-undef \
+ 	-Wno-unused-macros \
+@@ -157,7 +158,11 @@ CWARNFLAGS_STD = \
+ 	-Wmissing-prototypes \
+ 	-Wshadow \
+ 	-Winline \
+-	-Wnested-externs
++	-Wnested-externs \
++	-Wno-cast-align \
++	-Wno-format-invalid-specifier \
++	-Wno-ignored-attributes \
++	-Wno-strict-prototypes
+ 
+ # Can be overridden in Makefile.template or Makefile.$arch
+ export CWARNFLAGS ?= $(CWARNFLAGS_STD)
+@@ -170,6 +175,7 @@ CXXWARNFLAGS_STD = \
+ 	$(WARNFLAGS_STD) \
+ 	-Wno-c++98-compat-pedantic \
+ 	-Wno-exit-time-destructors \
++	-Wno-ignored-attributes \
+ 	-Wno-global-constructors \
+ 	-Wno-old-style-cast
+ 

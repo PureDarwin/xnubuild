@@ -88,22 +88,21 @@ wait_enter
 
 print "Installing CoreOSMakefiles"
 {
-	cd $COREOSMAKEFILES_VERISON && \
-		sudo ditto $PWD/Xcode /Applications/Xcode.app/Contents/Developer/Makefiles/CoreOS/Xcode && \
-	cd ..
+	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
+		sudo ditto $PWD/Xcode /Applications/Xcode.app/Contents/Developer/Makefiles/CoreOS/Xcode
 } || {
 	error "Failed to install CoreOSMakefiles"
 	exit 1
 }
 wait_enter
 
+mkdir -p $BUILD_DIR/dependencies
 print "Building dtrace"
 {
-	cd $DTRACE_VERSION && \
-		mkdir -p obj sym dst && \
-		xcodebuild install -target ctfconvert -target ctfdump -target ctfmerge ARCHS="x86_64" SRCROOT=$PWD OBJROOT=$PWD/obj SYMROOT=$PWD/sym DSTROOT=$PWD/dst && \
-		sudo ditto $PWD/dst/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain && \
-	cd ..
+	mkdir -p $BUILD_DIR/$DTRACE_VERSION.{obj,sym,dst}
+	cd $SCRIPT_DIRECTORY/$DTRACE_VERSION && \
+		xcodebuild install -target ctfconvert -target ctfdump -target ctfmerge ARCHS="x86_64" SRCROOT=$PWD OBJROOT=$BUILD_DIR/$DTRACE_VERSION.obj SYMROOT=$BUILD_DIR/$DTRACE_VERSION.sym DSTROOT=$BUILD_DIR/$DTRACE_VERSION.dst && \
+		ditto $BUILD_DIR/$DTRACE_VERSION.dst/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain $BUILD_DIR/dependencies
 } || {
 	error "Failed to build dtrace"
 	exit 1
@@ -112,11 +111,10 @@ wait_enter
 
 print "Building AvailabilityVersions"
 {
-	cd $AVAILABILITYVERSIONS_VERSION && \
-		mkdir -p dst && \
-		make install SRCROOT=$PWD DSTROOT=$PWD/dst && \
-		sudo ditto $PWD/dst/usr/local `xcrun -sdk macosx -show-sdk-path`/usr/local && \
-	cd ..
+	mkdir -p $BUILD_DIR/$AVAILABILITYVERSIONS_VERSION.dst
+	cd $SCRIPT_DIRECTORY/$AVAILABILITYVERSIONS_VERSION && \
+		make install SRCROOT=$PWD DSTROOT=$BUILD_DIR/$AVAILABILITYVERSIONS_VERSION.dst && \
+		ditto $BUILD_DIR/$AVAILABILITYVERSIONS_VERSION.dst/usr/local $BUILD_DIR/dependencies/usr/local
 } || {
 	error "Failed to build AvailabiltyVersions"
 	exit 1
@@ -126,13 +124,15 @@ wait_enter
 # Install XNU headers
 print "Installing XNU & LibSyscall headers"
 {
-	cd $XNU_VERSION/ && \
-		mkdir -p BUILD.hdrs/obj BUILD.hdrs/sym BUILD.hdrs/dst && \
-		make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$PWD/BUILD.hdrs/obj SYMROOT=$PWD/BUILD.hdrs/sym DSTROOT=$PWD/BUILD.hdrs/dst && \
-		patch -s -p1 < $PATCH_DIRECTORY/libsyscall.patch && \
-		sudo xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD/libsyscall OBJROOT=$PWD/BUILD.hdrs/obj SYMROOT=$PWD/BUILD.hdrs/sym DSTROOT=$PWD/BUILD.hdrs/dst && \
-		sudo ditto BUILD.hdrs/dst `xcrun -sdk macosx -show-sdk-path` && \
-	cd ..
+	mkdir -p $BUILD_DIR/$XNU_VERSION.hdrs.{obj,sym,dst}
+	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
+		patch -p1 < $PATCH_DIRECTORY/availability_versions.patch && \
+		patch -p1 < $PATCH_DIRECTORY/fix_codesigning.patch && \
+		patch -p1 < $PATCH_DIRECTORY/xnu_dependencies_dir.patch && \
+		DEPENDENCIES_DIR=$BUILD_DIR/dependencies make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst && \
+		patch -p1 < $PATCH_DIRECTORY/libsyscall.patch && \
+		sudo xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD/libsyscall OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
+		ditto $BUILD_DIR/$XNU_VERSION.hdrs.dst $BUILD_DIR/dependencies
 } || {
 	error "Failed to build XNU & LibSyscall headers"
 	exit 1
@@ -141,10 +141,9 @@ wait_enter
 
 print "Setting up libplatform"
 {
-	cd $LIBPLATFORM_VERISON && \
-		sudo ditto $PWD/include `xcrun -sdk macosx -show-sdk-path`/usr/local/include && \
-		sudo ditto $PWD/private `xcrun -sdk macosx -show-sdk-path`/usr/local/include && \
-	cd ..
+	cd $SCRIPT_DIRECTORY/$LIBPLATFORM_VERISON && \
+		ditto $PWD/include $BUILD_DIR/dependencies/usr/local/include && \
+		ditto $PWD/private $BUILD_DIR/dependencies/usr/local/include
 } || {
 	error "Failed to setup libplatform"
 	exit 1
@@ -153,11 +152,10 @@ wait_enter
 
 print "Setting up libfirehose"
 {
-	cd $LIBDISPATCH_VERSION && \
-		mkdir -p BUILD.hdrs/obj BUILD.hdrs/sym BUILD.hdrs/dst && \
-		sudo xcodebuild install -project libdispatch.xcodeproj -target libfirehose_kernel -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD OBJROOT=$PWD/obj SYMROOT=$PWD/sym DSTROOT=$PWD/dst && \
-		sudo ditto $PWD/dst/usr/local `xcrun -sdk macosx -show-sdk-path`/usr/local && \
-	cd ..
+	mkdir -p $BUILD_DIR/$LIBDISPATCH_VERSION.{obj,sym,dst}
+	cd $SCRIPT_DIRECTORY/$LIBDISPATCH_VERSION && \
+		sudo xcodebuild install -project libdispatch.xcodeproj -target libfirehose_kernel -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD OBJROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.obj SYMROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.sym DSTROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.dst ADDITIONAL_SDKS=$BUILD_DIR/dependencies DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
+		ditto $BUILD_DIR/$LIBDISPATCH_VERSION.dst/usr/local $BUILD_DIR/dependencies/usr/local
 } || {
 	error "Failed to setup libfirehose"
 	exit 1
@@ -167,9 +165,13 @@ wait_enter
 # Building XNU
 print "Building XNU"
 {
-	cd $XNU_VERSION && \
-		sudo make SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE && \
-	cd ..
+	mkdir -p $BUILD_DIR/$XNU_VERSION.{obj,sym,dst}
+	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
+		patch -p1 < $PATCH_DIRECTORY/kext_copyright_check.patch && \
+		patch -p1 < $PATCH_DIRECTORY/xnu_firehose_dir.patch && \
+		patch -p1 < $PATCH_DIRECTORY/fix_system_framework.patch && \
+		patch -p1 < $PATCH_DIRECTORY/xcode9_warnings.patch && \
+		DEPENDENCIES_DIR=$BUILD_DIR/dependencies sudo make SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies
 } || {
 	error "Failed to build XNU"
 	exit 1
