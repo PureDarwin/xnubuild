@@ -1,0 +1,10 @@
+# Files downloaded by xnubuild.sh
+/AvailabilityVersions-*/
+/CoreOSMakefiles-*/
+/dtrace-*/
+/libdispatch-*/
+/libplatform-*/
+/xnu-*/
+
+*.tar.gz
+/build/

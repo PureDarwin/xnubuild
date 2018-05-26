@@ -4,7 +4,9 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 error=$(tput bold)$(tput setb 1)$(tput setaf 7)
 
-PATCH_DIRECTORY=$(cd `dirname $0` && pwd)/patches
+SCRIPT_DIRECTORY=$(cd `dirname $0` && pwd)
+PATCH_DIRECTORY=$SCRIPT_DIRECTORY/patches
+BUILD_DIR=$SCRIPT_DIRECTORY/build
 
 print() {
 	echo "${bold}[$(date +"%T")]${normal} $1"
@@ -43,7 +45,6 @@ print "Getting the latest versions"
 
 
 SDK_ROOT=`xcodebuild -version -sdk macosx Path`
-BUILD_DIR=~/Desktop/xnubuild
 
 # Wait for user input
 function wait_enter {
@@ -58,16 +59,6 @@ print "${normal}AvailabilityVersions version:${bold} $AVAILABILITYVERSIONS_VERSI
 print "${normal}libplatform version:${bold} $LIBPLATFORM_VERISON"
 print "${normal}CoreOSMakefiles version:${bold} $COREOSMAKEFILES_VERISON${normal}"
 
-wait_enter
-
-print "Going to temporary build directory ($BUILD_DIR)"
-{
-	mkdir -p $BUILD_DIR
-	cd $BUILD_DIR
-} || {
-	error "Failed to make build directory"
-	exit 1
-}
 wait_enter
 
 # Curl these files from Opensource.apple.com
