@@ -187,5 +187,4 @@ print "Building XNU"
 
 print "Complete"
 
-cd $BUILD_DIR/$XNU_VERSION/BUILD/obj/RELEASE_X86_64
-open .
+open $BUILD_DIR/$XNU_VERSION.dst
