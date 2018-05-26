@@ -64,6 +64,7 @@ wait_enter
 # Curl these files from Opensource.apple.com
 print "Getting dependencies from Apple"
 {
+	cd $SCRIPT_DIRECTORY && \
 	curl -O https://opensource.apple.com/tarballs/dtrace/$DTRACE_VERSION.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/AvailabilityVersions/$AVAILABILITYVERSIONS_VERSION.tar.gz && \
 	curl -O https://opensource.apple.com/tarballs/xnu/$XNU_VERSION.tar.gz && \
@@ -79,6 +80,7 @@ wait_enter
 # Run this command to untar all downloaded files and rm the tar.gz files
 print "Extracting dependencies"
 {
+	cd $SCRIPT_DIRECTORY && \
 	for file in *.tar.gz; do tar -zxf $file; done && rm -f *.tar.gz
 } || {
 	error "Failed to extract dependencies"
