@@ -1,0 +1,12 @@
+diff --git a/osfmk/i386/cpu_topology.c b/osfmk/i386/cpu_topology.c
+index e079e6e..6f6baf7 100644
+--- a/osfmk/i386/cpu_topology.c
++++ b/osfmk/i386/cpu_topology.c
+@@ -37,6 +37,7 @@
+ #include <i386/cpu_data.h>
+ #include <i386/lapic.h>
+ #include <i386/machine_routines.h>
++#include <stddef.h>
+ 
+ __private_extern__ void qsort(
+     void * array,
