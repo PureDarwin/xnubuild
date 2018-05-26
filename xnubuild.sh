@@ -88,6 +88,7 @@ print "Extracting dependencies"
 }
 wait_enter
 
+if [ ! -f /Applications/Xcode.app/Contents/Developer/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
 print "Installing CoreOSMakefiles"
 {
 	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
@@ -97,6 +98,7 @@ print "Installing CoreOSMakefiles"
 	exit 1
 }
 wait_enter
+fi
 
 mkdir -p $BUILD_DIR/dependencies
 print "Building dtrace"
