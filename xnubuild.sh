@@ -180,7 +180,7 @@ print "Building XNU"
 		patch -s -p1 < $PATCH_DIRECTORY/fix_system_framework.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xcode9_warnings.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/fix_build.patch && \
-		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0
+		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make install SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0
 } || {
 	error "Failed to build XNU"
 	exit 1
