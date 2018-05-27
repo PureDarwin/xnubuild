@@ -1,0 +1,22 @@
+iff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
+index 4eca357..653af06 100644
+--- a/makedefs/MakeInc.def
++++ b/makedefs/MakeInc.def
+@@ -356,7 +356,7 @@ LDFLAGS_KERNEL_GEN = \
+ 	-Wl,-function_starts \
+ 	-Wl,-headerpad,152
+ 
+-LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel -lfirehose_kernel
++LDFLAGS_KERNEL_SDK	= -L$(DEPENDENCIES_DIR)/usr/local/lib/kernel -lfirehose_kernel
+ 
+ LDFLAGS_KERNEL_RELEASE	=
+ LDFLAGS_KERNEL_DEVELOPMENT     =
+@@ -464,7 +464,7 @@ INCFLAGS_IMPORT	= $(patsubst %, -I$(OBJROOT)/EXPORT_HDRS/%, $(COMPONENT_IMPORT_L
+ INCFLAGS_EXTERN	= -I$(SRCROOT)/EXTERNAL_HEADERS
+ INCFLAGS_GEN	= -I$(SRCROOT)/$(COMPONENT) -I$(OBJROOT)/EXPORT_HDRS/$(COMPONENT)
+ INCFLAGS_LOCAL	= -I.
+-INCFLAGS_SDK	= -I$(SDKROOT)/usr/local/include/kernel
++INCFLAGS_SDK	= -I$(DEPENDENCIES_DIR)/usr/local/include/kernel
+ 
+ INCFLAGS	= $(INCFLAGS_LOCAL) $(INCFLAGS_GEN) $(INCFLAGS_IMPORT) $(INCFLAGS_EXTERN) $(INCFLAGS_MAKEFILE) $(INCFLAGS_SDK)
+ 
