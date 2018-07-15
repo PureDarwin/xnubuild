@@ -62,7 +62,7 @@ print "${normal}CoreOSMakefiles version:${bold} $COREOSMAKEFILES_VERISON${normal
 wait_enter
 
 # Curl these files from Opensource.apple.com
-print "Getting dependencies from Apple"
+print "Getting dependencies from Apple (if required)"
 {
 	curl_dependency () {
 		if [ ! -f $1.tar.gz ]; then
