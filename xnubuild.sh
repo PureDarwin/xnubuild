@@ -141,11 +141,11 @@ print "Installing XNU & LibSyscall headers"
 {
 	mkdir -p $BUILD_DIR/$XNU_VERSION.hdrs.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/availability_versions.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/fix_codesigning.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu_dependencies_dir.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/availability_versions.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_codesigning.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_dependencies_dir.patch && \
 		DEPENDENCIES_DIR=$BUILD_DIR/dependencies make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst && \
-		patch -s -p1 < $PATCH_DIRECTORY/libsyscall.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall.patch && \
 		xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD/libsyscall OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$XNU_VERSION.hdrs.dst $BUILD_DIR/dependencies
 } || {
@@ -182,11 +182,11 @@ print "Building XNU, sudo password will be required"
 {
 	mkdir -p $BUILD_DIR/$XNU_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/kext_copyright_check.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu_firehose_dir.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/fix_system_framework.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xcode9_warnings.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/fix_build.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/kext_copyright_check.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_firehose_dir.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_system_framework.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/xcode9_warnings.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/missing_header.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make install SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0
 } || {
 	error "Failed to build XNU"
