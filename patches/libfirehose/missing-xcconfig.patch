@@ -1,0 +1,12 @@
+diff --git a/xcodeconfig/libdispatch.xcconfig b/xcodeconfig/libdispatch.xcconfig
+index 643e1d3..8a8515c 100644
+--- a/xcodeconfig/libdispatch.xcconfig
++++ b/xcodeconfig/libdispatch.xcconfig
+@@ -19,7 +19,6 @@
+ //
+ 
+ #include "<DEVELOPER_DIR>/Makefiles/CoreOS/Xcode/BSD.xcconfig"
+-#include "<DEVELOPER_DIR>/AppleInternal/XcodeConfig/PlatformSupport.xcconfig"
+ 
+ SDKROOT = macosx.internal
+ SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator
