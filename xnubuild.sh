@@ -116,6 +116,8 @@ print "Building dtrace"
 {
 	mkdir -p $BUILD_DIR/$DTRACE_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$DTRACE_VERSION && \
+		patch -s -p1 < $PATCH_DIRECTORY/dtrace/missing-xcconfig.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/dtrace/header-paths.patch && \
 		xcodebuild install -target ctfconvert -target ctfdump -target ctfmerge ARCHS="x86_64" SRCROOT=$PWD OBJROOT=$BUILD_DIR/$DTRACE_VERSION.obj SYMROOT=$BUILD_DIR/$DTRACE_VERSION.sym DSTROOT=$BUILD_DIR/$DTRACE_VERSION.dst && \
 		ditto $BUILD_DIR/$DTRACE_VERSION.dst/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain $BUILD_DIR/dependencies
 } || {

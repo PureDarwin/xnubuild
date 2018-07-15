@@ -1,0 +1,148 @@
+diff --git a/dtrace.xcodeproj/project.pbxproj b/dtrace.xcodeproj/project.pbxproj
+index f237b76..cc73a01 100644
+--- a/dtrace.xcodeproj/project.pbxproj
++++ b/dtrace.xcodeproj/project.pbxproj
+@@ -12727,6 +12727,7 @@
+ 				GCC_WARN_UNUSED_VARIABLE = YES;
+ 				MACOSX_DEPLOYMENT_TARGET = "";
+ 				TEST_INSTALL_PATH = "${APPLE_INTERNAL_DIR}/Tests/dtrace";
++				USE_HEADERMAP = NO;
+ 			};
+ 			name = Debug;
+ 		};
+@@ -12746,6 +12747,7 @@
+ 					"-DNS_BLOCK_ASSERTIONS",
+ 				);
+ 				TEST_INSTALL_PATH = "${APPLE_INTERNAL_DIR}/Tests/dtrace";
++				USE_HEADERMAP = NO;
+ 			};
+ 			name = Release;
+ 		};
+@@ -12925,6 +12927,11 @@
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
+ 				GCC_OPTIMIZATION_LEVEL = 0;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++				);
+ 				INSTALL_PATH = "$(HOME)/lib";
+ 				LIBRARY_STYLE = STATIC;
+ 				OTHER_CFLAGS = (
+@@ -12947,6 +12954,11 @@
+ 				DEBUG_INFORMATION_FORMAT = dwarf;
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++				);
+ 				INSTALL_PATH = "$(HOME)/lib";
+ 				LIBRARY_STYLE = STATIC;
+ 				OTHER_CFLAGS = (
+@@ -13127,6 +13139,12 @@
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
+ 				GCC_OPTIMIZATION_LEVEL = 0;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+@@ -13157,6 +13175,12 @@
+ 				);
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+ 				GCC_MODEL_TUNING = G5;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+@@ -13189,6 +13213,12 @@
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
+ 				GCC_OPTIMIZATION_LEVEL = 0;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+@@ -13218,6 +13248,12 @@
+ 				);
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+ 				GCC_MODEL_TUNING = G5;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+@@ -13245,6 +13281,12 @@
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
+ 				GCC_OPTIMIZATION_LEVEL = 0;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libdwarf,
++					libdwarf/cmplrs,
++				);
+ 				INSTALL_PATH = /usr/local/lib;
+ 				PRODUCT_NAME = dwarf;
+ 				SEPARATE_STRIP = NO;
+@@ -13262,6 +13304,12 @@
+ 				DEBUG_INFORMATION_FORMAT = dwarf;
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libdwarf,
++					libdwarf/cmplrs,
++				);
+ 				INSTALL_PATH = /usr/local/lib;
+ 				PRODUCT_NAME = dwarf;
+ 				SEPARATE_STRIP = NO;
+@@ -13284,6 +13332,12 @@
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+ 				GCC_MODEL_TUNING = G5;
+ 				GCC_OPTIMIZATION_LEVEL = 0;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+@@ -13314,6 +13368,12 @@
+ 				);
+ 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+ 				GCC_MODEL_TUNING = G5;
++				HEADER_SEARCH_PATHS = (
++					sys,
++					head,
++					libelf,
++					libdwarf,
++				);
+ 				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
