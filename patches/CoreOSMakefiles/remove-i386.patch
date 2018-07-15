@@ -1,0 +1,10 @@
+diff --git a/Xcode/BSD.xcconfig b/Xcode/BSD.xcconfig
+index 390b6c3..34b2dd3 100644
+--- a/Xcode/BSD.xcconfig
++++ b/Xcode/BSD.xcconfig
+@@ -1,4 +1,4 @@
+-ARCHS = $(ARCHS_STANDARD_32_64_BIT);
++ARCHS = $(ARCHS_STANDARD);
+ CODE_SIGN_IDENTITY = -;
+ CURRENT_PROJECT_VERSION = $(RC_ProjectSourceVersion);
+ DEAD_CODE_STRIPPING = YES;

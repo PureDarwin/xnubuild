@@ -103,6 +103,7 @@ if [ ! -f $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
 print "Installing CoreOSMakefiles, sudo password will be required"
 {
 	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
+		patch -s -p1 < $PATCH_DIRECTORY/CoreOSMakefiles/remove-i386.patch && \
 		sudo ditto $PWD/Xcode $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode
 } || {
 	error "Failed to install CoreOSMakefiles"
@@ -147,7 +148,6 @@ print "Installing XNU & LibSyscall headers"
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_codesigning.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_dependencies_dir.patch && \
 		DEPENDENCIES_DIR=$BUILD_DIR/dependencies make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall.patch && \
 		xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx ARCHS='x86_64 i386' SRCROOT=$PWD/libsyscall OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$XNU_VERSION.hdrs.dst $BUILD_DIR/dependencies
 } || {
