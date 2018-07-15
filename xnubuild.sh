@@ -173,6 +173,8 @@ print "Setting up libfirehose"
 {
 	mkdir -p $BUILD_DIR/$LIBDISPATCH_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$LIBDISPATCH_VERSION && \
+		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/header-paths.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/missing-xcconfig.patch && \
 		xcodebuild install -project libdispatch.xcodeproj -target libfirehose_kernel -sdk macosx ARCHS='x86_64' SRCROOT=$PWD OBJROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.obj SYMROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.sym DSTROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.dst ADDITIONAL_SDKS=$BUILD_DIR/dependencies DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$LIBDISPATCH_VERSION.dst/usr/local $BUILD_DIR/dependencies/usr/local
 } || {
