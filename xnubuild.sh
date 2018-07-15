@@ -92,11 +92,12 @@ print "Extracting dependencies"
 }
 wait_enter
 
-if [ ! -f /Applications/Xcode.app/Contents/Developer/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
+XCODE_DEVELOPER_DIR=$(xcode-select -print-path)
+if [ ! -f $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
 print "Installing CoreOSMakefiles"
 {
 	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
-		sudo ditto $PWD/Xcode /Applications/Xcode.app/Contents/Developer/Makefiles/CoreOS/Xcode
+		sudo ditto $PWD/Xcode $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode
 } || {
 	error "Failed to install CoreOSMakefiles"
 	exit 1
