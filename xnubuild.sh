@@ -64,13 +64,20 @@ wait_enter
 # Curl these files from Opensource.apple.com
 print "Getting dependencies from Apple"
 {
+	curl_dependency () {
+		if [ ! -f $1.tar.gz ]; then
+			PROJECT_NAME=$(echo $1 | sed -Ee 's,-.*$,,g')
+			curl -O https://opensource.apple.com/tarballs/$PROJECT_NAME/$1.tar.gz
+		fi
+	}
+
 	cd $SCRIPT_DIRECTORY && \
-	curl -O https://opensource.apple.com/tarballs/dtrace/$DTRACE_VERSION.tar.gz && \
-	curl -O https://opensource.apple.com/tarballs/AvailabilityVersions/$AVAILABILITYVERSIONS_VERSION.tar.gz && \
-	curl -O https://opensource.apple.com/tarballs/xnu/$XNU_VERSION.tar.gz && \
-	curl -O https://opensource.apple.com/tarballs/libplatform/$LIBPLATFORM_VERISON.tar.gz && \
-	curl -O https://opensource.apple.com/tarballs/libdispatch/$LIBDISPATCH_VERSION.tar.gz && \
-	curl -O	https://opensource.apple.com/tarballs/CoreOSMakefiles/$COREOSMAKEFILES_VERISON.tar.gz
+	curl_dependency $DTRACE_VERSION && \
+	curl_dependency $AVAILABILITYVERSIONS_VERSION && \
+	curl_dependency $XNU_VERSION && \
+	curl_dependency $LIBPLATFORM_VERISON && \
+	curl_dependency $LIBDISPATCH_VERSION && \
+	curl_dependency $COREOSMAKEFILES_VERISON
 } || {
 	error "Failed to get dependencies from Apple"
 	exit 1
@@ -84,8 +91,7 @@ print "Extracting dependencies"
 	for file in *.tar.gz; do
 		rm -rf $(basename $file .tar.gz)
 		tar -zxf $file
-	done && \
-	rm -f *.tar.gz
+	done
 } || {
 	error "Failed to extract dependencies"
 	exit 1
