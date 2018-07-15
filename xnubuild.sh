@@ -94,7 +94,7 @@ wait_enter
 
 XCODE_DEVELOPER_DIR=$(xcode-select -print-path)
 if [ ! -f $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
-print "Installing CoreOSMakefiles"
+print "Installing CoreOSMakefiles, sudo password will be required"
 {
 	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
 		sudo ditto $PWD/Xcode $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode
@@ -172,7 +172,7 @@ print "Setting up libfirehose"
 wait_enter
 
 # Building XNU
-print "Building XNU"
+print "Building XNU, sudo password will be required"
 {
 	mkdir -p $BUILD_DIR/$XNU_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
