@@ -1,0 +1,12 @@
+diff --git a/libsyscall/Libsyscall.xcodeproj/project.pbxproj b/libsyscall/Libsyscall.xcodeproj/project.pbxproj
+index 63c8b40..7dafe04 100644
+--- a/libsyscall/Libsyscall.xcodeproj/project.pbxproj
++++ b/libsyscall/Libsyscall.xcodeproj/project.pbxproj
+@@ -1457,7 +1457,6 @@
+ 			isa = XCBuildConfiguration;
+ 			baseConfigurationReference = C9D9BE0F114FFADC0000D8B9 /* Libsyscall.xcconfig */;
+ 			buildSettings = {
+-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+ 				COPY_PHASE_STRIP = YES;
+ 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+ 				MAP_PLATFORM = "$(MAP_PLATFORM_$(PLATFORM_NAME))";
