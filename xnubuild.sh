@@ -178,6 +178,7 @@ print "Setting up libfirehose"
 		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/no-werror.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/void-returns-void.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/include-standard-path.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/fix-xnu-linking.patch && \
 		xcodebuild install -project libdispatch.xcodeproj -target libfirehose_kernel -sdk macosx ARCHS='x86_64' SRCROOT=$PWD OBJROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.obj SYMROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.sym DSTROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$LIBDISPATCH_VERSION.dst/usr/local $BUILD_DIR/dependencies/usr/local
 } || {

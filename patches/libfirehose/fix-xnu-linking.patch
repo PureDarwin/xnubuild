@@ -1,0 +1,45 @@
+diff --git a/src/firehose/firehose_inline_internal.h b/src/firehose/firehose_inline_internal.h
+index 1ff1c5a..397c241 100644
+--- a/src/firehose/firehose_inline_internal.h
++++ b/src/firehose/firehose_inline_internal.h
+@@ -48,6 +48,23 @@ firehose_bitmap_first_set(uint64_t bitmap)
+ }
+ #endif
+ 
++static firehose_chunk_t firehose_buffer_chunk_for_address(void *addr);
++static uint16_t firehose_buffer_chunk_to_ref(firehose_buffer_t fb, firehose_chunk_t fbc);
++static firehose_chunk_t firehose_buffer_ref_to_chunk(firehose_buffer_t fb, uint16_t ref);
++static uint8_t firehose_buffer_qos_bits_propagate(void);
++static void firehose_buffer_stream_flush(firehose_buffer_t fb, firehose_stream_t stream);
++static firehose_tracepoint_t
++firehose_buffer_tracepoint_reserve(firehose_buffer_t fb, uint64_t stamp,
++								   firehose_stream_t stream, uint16_t pubsize,
++								   uint16_t privsize, uint8_t **privptr);
++static void
++firehose_buffer_tracepoint_flush(firehose_buffer_t fb,
++								 firehose_tracepoint_t ft, firehose_tracepoint_id_u ftid);
++void firehose_buffer_ring_enqueue(firehose_buffer_t fb, uint16_t ref);
++firehose_tracepoint_t
++firehose_buffer_tracepoint_reserve_slow(firehose_buffer_t fb,
++										firehose_tracepoint_query_t ask, uint8_t **privptr);
++
+ #pragma mark -
+ #pragma mark Mach Misc.
+ #ifndef KERNEL
+@@ -162,7 +179,6 @@ firehose_buffer_ref_to_chunk(firehose_buffer_t fb, uint16_t ref)
+ 	return fb->fb_chunks + ref;
+ }
+ 
+-#ifndef FIREHOSE_SERVER
+ #if DISPATCH_PURE_C
+ 
+ OS_ALWAYS_INLINE
+@@ -412,8 +428,6 @@ firehose_buffer_set_bank_flags(firehose_buffer_t fb, unsigned long bits)
+ }
+ #endif // !KERNEL
+ 
+-#endif // !defined(FIREHOSE_SERVER)
+-
+ #endif // DISPATCH_PURE_C
+ 
+ #endif // __FIREHOSE_INLINE_INTERNAL__
