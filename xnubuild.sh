@@ -187,7 +187,6 @@ print "Setting up libfirehose"
 }
 wait_enter
 
-# Building XNU
 print "Building XNU, sudo password will be required"
 {
 	mkdir -p $BUILD_DIR/$XNU_VERSION.{obj,sym,dst}
