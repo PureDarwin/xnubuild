@@ -1,6 +1,6 @@
 # xnubuild
 
-A script by the PureDarwin project for setting up a macOS development environment and building XNU.
+A script by the PureDarwin project for setting up a macOS development environment and building XNU, as well as the Libsyscall component that is bundled with XNU.
 
 ## Running
 
