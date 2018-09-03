@@ -163,15 +163,3 @@ diff -rupN xnu-4570.1.46.org/libsyscall/Libsyscall.xcodeproj/project.pbxproj xnu
  				030B179B135377B400DAD1F0 /* open_dprotected_np.c in Sources */,
  				E4D45C3116F868ED0002AF25 /* proc_listpidspath.c in Sources */,
  				374A36E314748F1300AAF39D /* varargs_wrappers.s in Sources */,
-diff -rupN xnu-4570.1.46.org/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/contents.xcworkspacedata xnu-4570.1.46/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/contents.xcworkspacedata
---- xnu-4570.1.46.org/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/contents.xcworkspacedata	1969-12-31 19:00:00.000000000 -0500
-+++ xnu-4570.1.46/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/contents.xcworkspacedata	2017-10-01 01:50:50.000000000 -0400
-@@ -0,0 +1,7 @@
-+<?xml version="1.0" encoding="UTF-8"?>
-+<Workspace
-+   version = "1.0">
-+   <FileRef
-+      location = "self:">
-+   </FileRef>
-+</Workspace>
-Binary files xnu-4570.1.46.org/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/xcuserdata/insane.xcuserdatad/UserInterfaceState.xcuserstate and xnu-4570.1.46/libsyscall/Libsyscall.xcodeproj/project.xcworkspace/xcuserdata/insane.xcuserdatad/UserInterfaceState.xcuserstate differ
