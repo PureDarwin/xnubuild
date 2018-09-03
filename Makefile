@@ -113,10 +113,12 @@ xnu : download_tarballs libfirehose AvailabilityVersions dtrace
 		DSTROOT=$(DSTROOT) BUILD_WERROR=0 BUILD_LTO=0
 
 .PHONY : libsyscall
-libsyscall : download_tarballs
+libsyscall : download_tarballs xnu_headers
 	cd $(SRCROOT)/xnu-4570.41.2 && \
-		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/libsyscall-build.patch
-	make install RC_ProjectName=Libsyscall SDKROOT=macosx \
+		patch -sf -p1 < $(PATCH_DIRECTORY)/xnu/libsyscall-build.patch
+	DEPENDENCIES_DIR=$(OBJROOT)/dependencies \
+		make install -C $(SRCROOT)/xnu-4570.41.2 RC_ProjectName=Libsyscall \
+		SDKROOT=macosx SRCROOT=$(SRCROOT)/xnu-4570.41.2 \
 		OBJROOT=$(OBJROOT) SYMROOT=$(SYMROOT) DSTROOT=$(DSTROOT)
 
 .PHONY : install
