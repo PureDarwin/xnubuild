@@ -9,6 +9,10 @@ XCODE_DEVELOPER_DIR = $(shell xcode-select -print-path)
 
 .PHONY : download_tarballs
 download_tarballs :
+	@if [ ! -S /var/run/mDNSResponder ]; then \
+		echo "*** xnubuild cannot run inside of a chroot. Pass '-nochroot' flag to darwinbuild."; \
+		exit 1; \
+	fi
 	curl -sO https://opensource.apple.com/tarballs/AvailabilityVersions/AvailabilityVersions-32.30.1.tar.gz
 	curl -sO https://opensource.apple.com/tarballs/CoreOSMakefiles/CoreOSMakefiles-77.tar.gz
 	curl -sO https://opensource.apple.com/tarballs/dtrace/dtrace-262.tar.gz
