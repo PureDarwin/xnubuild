@@ -57,6 +57,7 @@ xnu_headers : download_tarballs AvailabilityVersions dtrace
 	cd $(SRCROOT)/xnu-4570.41.2 && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/availability_versions.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/fix_codesigning.patch && \
+		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/fix_system_framework.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/xnu_dependencies_dir.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/libsyscall.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/remove-i386.patch
