@@ -1,0 +1,5 @@
+language: c
+os: osx
+
+script:
+ - sh build.sh
