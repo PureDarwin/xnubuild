@@ -1,0 +1,5 @@
+os: osx
+xcode: xcode9.4
+
+install:
+ - sh xnubuild.sh
