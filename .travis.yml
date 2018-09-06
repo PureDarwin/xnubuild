@@ -1,0 +1,9 @@
+language: c
+os: osx
+xcode: xcode9.4
+
+script:
+  - echo "Using a dummy script because TravisCI is strict."
+
+install:
+ - sh xnubuild.sh travis

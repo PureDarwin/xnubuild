@@ -1,4 +1,4 @@
-# xnubuild
+# xnubuild [![Build Status](https://travis-ci.org/PureDarwin2/xnubuild.svg?branch=master)](https://travis-ci.org/PureDarwin2/xnubuild)
 
 A script by the PureDarwin project for setting up a macOS development environment and building XNU, as well as the Libsyscall component that is bundled with XNU.
 
@@ -10,7 +10,9 @@ At various steps the script will ask you to press Enter to continue. If theres n
 
 ## Options
 
-The script has no options. It always builds into the `build/` directory alongiide the script (that is, in the root of this repository).
+The script has no build options. It always builds into the `build/` directory alongside the script (that is, in the root of this repository).
+
+Though, there is a special option called `travis` specifically designed so that the script can run without user-interaction in TravisCI.  You could call that if you want the process to be automatic, but you may be required to type your password in certain occasions.
 
 ## Notes
 
