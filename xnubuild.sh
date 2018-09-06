@@ -50,9 +50,9 @@ SDK_ROOT=`xcodebuild -version -sdk macosx Path`
 
 # Wait for user input
 function wait_enter {
-    if [ "$isRunningInTravis" != "travis" ] ; then
-        read -p "Press enter to continue"
-    fi
+	if [ "$isRunningInTravis" != "travis" ] ; then
+		read -p "Press enter to continue"
+	fi
 }
 
 print "Found versions:"
