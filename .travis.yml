@@ -2,4 +2,4 @@ language: c
 os: osx
 
 script:
- - sh build.sh
+ - sh build.sh travis
