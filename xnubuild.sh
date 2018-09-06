@@ -1,5 +1,7 @@
 #!/bin/bash
 
+isRunningInTravis=$1
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 error=$(tput bold)$(tput setb 1)$(tput setaf 7)
@@ -48,7 +50,9 @@ SDK_ROOT=`xcodebuild -version -sdk macosx Path`
 
 # Wait for user input
 function wait_enter {
-	read -p "Press enter to continue"
+    if [ "$isRunningInTravis" != "travis" ] ; then
+        read -p "Press enter to continue"
+    fi
 }
 
 print "Found versions:"
