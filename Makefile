@@ -106,7 +106,6 @@ xnu : download_tarballs libfirehose AvailabilityVersions dtrace
 	cd $(SRCROOT)/xnu-4570.41.2 && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/kext_copyright_check.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/xnu_firehose_dir.patch && \
-		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/fix_system_framework.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/xcode9_warnings.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/missing_header.patch && \
 		patch -s -p1 < $(PATCH_DIRECTORY)/xnu/invalid_assembly.patch && \
