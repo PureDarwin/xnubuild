@@ -1,8 +1,8 @@
 diff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
-index 8c49bd7..6ba84a4 100644
+index 6f6583b..a94076c 100644
 --- a/makedefs/MakeInc.def
 +++ b/makedefs/MakeInc.def
-@@ -130,6 +130,7 @@ WARNFLAGS_STD := \
+@@ -120,6 +120,7 @@ WARNFLAGS_STD := \
  	-Wfloat-conversion \
  	-Wconstant-conversion \
  	-Wpointer-bool-conversion \
@@ -10,9 +10,9 @@ index 8c49bd7..6ba84a4 100644
  	-Wno-covered-switch-default \
  	-Wno-disabled-macro-expansion \
  	-Wno-documentation-unknown-command \
-@@ -143,13 +144,15 @@ WARNFLAGS_STD := \
+@@ -132,13 +133,15 @@ WARNFLAGS_STD := \
+ 	-Wno-padded \
  	-Wno-partial-availability \
- 	-Wno-pedantic \
  	-Wno-shift-sign-overflow \
 +	-Wno-strict-prototypes \
  	-Wno-switch-enum \
@@ -25,31 +25,5 @@ index 8c49bd7..6ba84a4 100644
 +	-Wno-zero-length-array \
 +	-Wno-zero-as-null-pointer-constant
  
- CWARNFLAGS_STD = \
- 	$(WARNFLAGS_STD) \
-@@ -157,7 +160,12 @@ CWARNFLAGS_STD = \
- 	-Wmissing-prototypes \
- 	-Wshadow \
- 	-Winline \
--	-Wnested-externs
-+	-Wnested-externs \
-+	-Wno-cast-align \
-+	-Wno-format-invalid-specifier \
-+	-Wno-ignored-attributes \
-+	-Wno-strict-prototypes \
-+	-Wno-shadow-field
- 
- # Can be overridden in Makefile.template or Makefile.$arch
- export CWARNFLAGS ?= $(CWARNFLAGS_STD)
-@@ -170,8 +178,10 @@ CXXWARNFLAGS_STD = \
- 	$(WARNFLAGS_STD) \
- 	-Wno-c++98-compat-pedantic \
- 	-Wno-exit-time-destructors \
-+	-Wno-ignored-attributes \
- 	-Wno-global-constructors \
--	-Wno-old-style-cast
-+	-Wno-old-style-cast \
-+	-Wno-inconsistent-missing-destructor-override
- 
- # overloaded-virtual warnings are non-fatal (9000888)
- CXXWARNFLAGS_STD += -Wno-error=overloaded-virtual
+ WARNFLAGS_STD := $(WARNFLAGS_STD) \
+ 	-Wno-unknown-warning-option \

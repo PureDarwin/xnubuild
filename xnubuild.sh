@@ -191,7 +191,6 @@ print "Building XNU, sudo password may be required"
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_firehose_dir.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_system_framework.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xcode9_warnings.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/missing_header.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/invalid_assembly.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/add_missing_symbol.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make install SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0 BUILD_LTO=0
