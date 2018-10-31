@@ -36,7 +36,6 @@ LIBDISPATCH_VERSION=libdispatch-913.60.2
 DTRACE_VERSION=dtrace-262.50.12
 AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
 LIBPLATFORM_VERSION=libplatform-161.50.1
-COREOSMAKEFILES_VERSION=CoreOSMakefiles-77
 
 SDK_ROOT=`xcodebuild -version -sdk macosx Path`
 
@@ -52,8 +51,7 @@ print "${normal}XNU version:${bold} $XNU_VERSION"
 print "${normal}libdispatch version:${bold} $LIBDISPATCH_VERSION"
 print "${normal}dtrace version:${bold} $DTRACE_VERSION"
 print "${normal}AvailabilityVersions version:${bold} $AVAILABILITYVERSIONS_VERSION"
-print "${normal}libplatform version:${bold} $LIBPLATFORM_VERSION"
-print "${normal}CoreOSMakefiles version:${bold} $COREOSMAKEFILES_VERSION${normal}"
+print "${normal}libplatform version:${bold} $LIBPLATFORM_VERSION${normal}"
 
 wait_enter
 
@@ -72,8 +70,7 @@ print "Getting dependencies from Apple (if required)"
 	curl_dependency $AVAILABILITYVERSIONS_VERSION && \
 	curl_dependency $XNU_VERSION && \
 	curl_dependency $LIBPLATFORM_VERSION && \
-	curl_dependency $LIBDISPATCH_VERSION && \
-	curl_dependency $COREOSMAKEFILES_VERSION
+	curl_dependency $LIBDISPATCH_VERSION
 } || {
 	error "Failed to get dependencies from Apple"
 	exit 1
@@ -95,18 +92,6 @@ print "Extracting dependencies"
 wait_enter
 
 XCODE_DEVELOPER_DIR=$(xcode-select -print-path)
-if [ ! -f $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
-print "Installing CoreOSMakefiles, sudo password may be required"
-{
-	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/CoreOSMakefiles/remove-i386.patch && \
-		sudo ditto $PWD/Xcode $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode
-} || {
-	error "Failed to install CoreOSMakefiles"
-	exit 1
-}
-wait_enter
-fi
 
 mkdir -p $BUILD_DIR/dependencies
 print "Building dtrace"
