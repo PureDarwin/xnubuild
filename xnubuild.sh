@@ -31,20 +31,12 @@ print "Setting up macOS OpenSource Build Environment"
 print "Script by PureDarwin, version 1.0"
 print "---"
 
-print "Getting the latest versions"
-{
-	VERSION_REGEX="\d+(\.?\d+\.?\d+\.\d+)?"
-	XNU_VERSION=xnu-4570.71.2
-	LIBDISPATCH_VERSION=libdispatch-913.60.2
-	DTRACE_VERSION=dtrace-262.50.12
-	AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
-	LIBPLATFORM_VERSION=libplatform-161.50.1
-	COREOSMAKEFILES_VERSION=CoreOSMakefiles-77
-} || {
-	error "Failed to get latest versions"
-	exit 1
-}
-
+XNU_VERSION=xnu-4570.71.2
+LIBDISPATCH_VERSION=libdispatch-913.60.2
+DTRACE_VERSION=dtrace-262.50.12
+AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
+LIBPLATFORM_VERSION=libplatform-161.50.1
+COREOSMAKEFILES_VERSION=CoreOSMakefiles-77
 
 SDK_ROOT=`xcodebuild -version -sdk macosx Path`
 
