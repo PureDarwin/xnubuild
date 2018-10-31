@@ -38,8 +38,8 @@ print "Getting the latest versions"
 	LIBDISPATCH_VERSION=libdispatch-913.60.2
 	DTRACE_VERSION=dtrace-262.50.12
 	AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
-	LIBPLATFORM_VERISON=libplatform-161.50.1
-	COREOSMAKEFILES_VERISON=CoreOSMakefiles-77
+	LIBPLATFORM_VERSION=libplatform-161.50.1
+	COREOSMAKEFILES_VERSION=CoreOSMakefiles-77
 } || {
 	error "Failed to get latest versions"
 	exit 1
@@ -60,8 +60,8 @@ print "${normal}XNU version:${bold} $XNU_VERSION"
 print "${normal}libdispatch version:${bold} $LIBDISPATCH_VERSION"
 print "${normal}dtrace version:${bold} $DTRACE_VERSION"
 print "${normal}AvailabilityVersions version:${bold} $AVAILABILITYVERSIONS_VERSION"
-print "${normal}libplatform version:${bold} $LIBPLATFORM_VERISON"
-print "${normal}CoreOSMakefiles version:${bold} $COREOSMAKEFILES_VERISON${normal}"
+print "${normal}libplatform version:${bold} $LIBPLATFORM_VERSION"
+print "${normal}CoreOSMakefiles version:${bold} $COREOSMAKEFILES_VERSION${normal}"
 
 wait_enter
 
@@ -79,9 +79,9 @@ print "Getting dependencies from Apple (if required)"
 	curl_dependency $DTRACE_VERSION && \
 	curl_dependency $AVAILABILITYVERSIONS_VERSION && \
 	curl_dependency $XNU_VERSION && \
-	curl_dependency $LIBPLATFORM_VERISON && \
+	curl_dependency $LIBPLATFORM_VERSION && \
 	curl_dependency $LIBDISPATCH_VERSION && \
-	curl_dependency $COREOSMAKEFILES_VERISON
+	curl_dependency $COREOSMAKEFILES_VERSION
 } || {
 	error "Failed to get dependencies from Apple"
 	exit 1
@@ -106,7 +106,7 @@ XCODE_DEVELOPER_DIR=$(xcode-select -print-path)
 if [ ! -f $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode/BSD.xcconfig ]; then
 print "Installing CoreOSMakefiles, sudo password may be required"
 {
-	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERISON && \
+	cd $SCRIPT_DIRECTORY/$COREOSMAKEFILES_VERSION && \
 		patch -s -p1 < $PATCH_DIRECTORY/CoreOSMakefiles/remove-i386.patch && \
 		sudo ditto $PWD/Xcode $XCODE_DEVELOPER_DIR/Makefiles/CoreOS/Xcode
 } || {
@@ -164,7 +164,7 @@ wait_enter
 
 print "Setting up libplatform"
 {
-	cd $SCRIPT_DIRECTORY/$LIBPLATFORM_VERISON && \
+	cd $SCRIPT_DIRECTORY/$LIBPLATFORM_VERSION && \
 		ditto $PWD/include $BUILD_DIR/dependencies/usr/local/include && \
 		ditto $PWD/private $BUILD_DIR/dependencies/usr/local/include
 } || {
