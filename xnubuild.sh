@@ -144,6 +144,7 @@ print "Installing XNU & LibSyscall headers"
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_dependencies_dir.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/remove-i386.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/xcode10.patch && \
 		DEPENDENCIES_DIR=$BUILD_DIR/dependencies make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst && \
 		xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx SRCROOT=$PWD/libsyscall OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$XNU_VERSION.hdrs.dst $BUILD_DIR/dependencies
