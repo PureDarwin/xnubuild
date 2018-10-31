@@ -34,12 +34,12 @@ print "---"
 print "Getting the latest versions"
 {
 	VERSION_REGEX="\d+(\.?\d+\.?\d+\.\d+)?"
-	XNU_VERSION=$(curl -s https://opensource.apple.com/tarballs/xnu/ | egrep -o "xnu-$VERSION_REGEX" | sort -V | tail -n 1)
-	LIBDISPATCH_VERSION=$(curl -s https://opensource.apple.com/tarballs/libdispatch/ | egrep -o "libdispatch-$VERSION_REGEX" | sort -V | tail -n 1)
-	DTRACE_VERSION=$(curl -s https://opensource.apple.com/tarballs/dtrace/ | egrep -o "dtrace-$VERSION_REGEX" | sort -V | tail -n 1)
-	AVAILABILITYVERSIONS_VERSION=$(curl -s https://opensource.apple.com/tarballs/AvailabilityVersions/ | egrep -o "AvailabilityVersions-$VERSION_REGEX" | sort -V | tail -n 1)
-	LIBPLATFORM_VERISON=$(curl -s https://opensource.apple.com/tarballs/libplatform/ | egrep -o "libplatform-$VERSION_REGEX" | sort -V | tail -n 1)
-	COREOSMAKEFILES_VERISON=$(curl -s https://opensource.apple.com/tarballs/CoreOSMakefiles/ | egrep -o "CoreOSMakefiles-$VERSION_REGEX" | sort -V | tail -n 1)
+	XNU_VERSION=xnu-4570.71.2
+	LIBDISPATCH_VERSION=libdispatch-913.60.2
+	DTRACE_VERSION=dtrace-262.50.12
+	AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
+	LIBPLATFORM_VERISON=libplatform-161.50.1
+	COREOSMAKEFILES_VERISON=CoreOSMakefiles-77
 } || {
 	error "Failed to get latest versions"
 	exit 1
