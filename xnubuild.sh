@@ -2,9 +2,15 @@
 
 isRunningInTravis=$1
 
-bold=$(tput bold)
-normal=$(tput sgr0)
-error=$(tput bold)$(tput setb 1)$(tput setaf 7)
+if [ -t 1 ]; then
+	bold=$(tput bold)
+	normal=$(tput sgr0)
+	error=$(tput bold)$(tput setb 1)$(tput setaf 7)
+else
+	bold=""
+	normal=""
+	error=""
+fi
 
 SCRIPT_DIRECTORY=$(cd `dirname $0` && pwd)
 PATCH_DIRECTORY=$SCRIPT_DIRECTORY/patches
