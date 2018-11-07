@@ -14,7 +14,10 @@ fi
 
 SCRIPT_DIRECTORY=$(cd `dirname $0` && pwd)
 PATCH_DIRECTORY=$SCRIPT_DIRECTORY/patches
-BUILD_DIR=$SCRIPT_DIRECTORY/build
+
+if [ "$BUILD_DIR" = "" ]; then
+	BUILD_DIR=$SCRIPT_DIRECTORY/build
+fi
 
 print() {
 	echo "${bold}[$(date +"%T")]${normal} $1"
