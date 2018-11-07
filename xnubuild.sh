@@ -201,4 +201,6 @@ print "Building Libsyscall, sudo password may be required"
 
 print "Complete"
 
-open $BUILD_DIR/$XNU_VERSION.dst
+if [ "$isRunningInTravis" != "travis" ]; then
+	open $BUILD_DIR/$XNU_VERSION.dst
+fi
