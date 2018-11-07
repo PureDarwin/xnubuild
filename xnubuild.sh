@@ -46,7 +46,7 @@ function wait_enter {
 	fi
 }
 
-print "Found versions:"
+print "Using versions:"
 print "${normal}XNU version:${bold} $XNU_VERSION"
 print "${normal}libdispatch version:${bold} $LIBDISPATCH_VERSION"
 print "${normal}dtrace version:${bold} $DTRACE_VERSION"
