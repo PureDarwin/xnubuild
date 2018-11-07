@@ -61,7 +61,6 @@ print "${normal}libplatform version:${bold} $LIBPLATFORM_VERSION${normal}"
 
 wait_enter
 
-# Curl these files from Opensource.apple.com
 print "Getting dependencies from Apple (if required)"
 {
 	curl_dependency () {
@@ -83,7 +82,6 @@ print "Getting dependencies from Apple (if required)"
 }
 wait_enter
 
-# Extract all the downloaded source package tarballs
 print "Extracting dependencies"
 {
 	cd $SCRIPT_DIRECTORY && \
