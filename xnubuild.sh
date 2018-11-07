@@ -77,7 +77,7 @@ print "Getting dependencies from Apple (if required)"
 }
 wait_enter
 
-# Run this command to untar all downloaded files and rm the tar.gz files
+# Extract all the downloaded source package tarballs
 print "Extracting dependencies"
 {
 	cd $SCRIPT_DIRECTORY && \
