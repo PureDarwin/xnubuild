@@ -2,11 +2,22 @@ diff --git a/xcodeconfig/libdispatch.xcconfig b/xcodeconfig/libdispatch.xcconfig
 index 643e1d3..8a8515c 100644
 --- a/xcodeconfig/libdispatch.xcconfig
 +++ b/xcodeconfig/libdispatch.xcconfig
-@@ -19,7 +19,6 @@
+@@ -19,4 +19,13 @@
  //
- 
- #include "<DEVELOPER_DIR>/Makefiles/CoreOS/Xcode/BSD.xcconfig"
+
+-#include "<DEVELOPER_DIR>/Makefiles/CoreOS/Xcode/BSD.xcconfig"
 -#include "<DEVELOPER_DIR>/AppleInternal/XcodeConfig/PlatformSupport.xcconfig"
- 
++// From BSD.xcconfig
++ARCHS = $(ARCHS_STANDARD);
++CODE_SIGN_IDENTITY = -;
++CURRENT_PROJECT_VERSION = $(RC_ProjectSourceVersion);
++DEAD_CODE_STRIPPING = YES;
++DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
++PREBINDING = NO;
++SDKROOT = macosx;
++VERSION_INFO_PREFIX = __;
++VERSIONING_SYSTEM = apple-generic;
++// End BSD.xcconfig
+
  SDKROOT = macosx.internal
  SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator
