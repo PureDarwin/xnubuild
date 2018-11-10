@@ -1,4 +1,4 @@
-# xnubuild [![Build Status](https://travis-ci.org/PureDarwin/xnubuild.svg?branch=master)](https://travis-ci.org/PureDarwin/xnubuild)
+# xnubuild [![Build Status](https://travis-ci.com/PureDarwin/xnubuild.svg?branch=master)](https://travis-ci.com/PureDarwin/xnubuild)
 
 A script by the PureDarwin project for setting up a macOS development environment and building XNU, as well as the Libsyscall component that is bundled with XNU.
 
