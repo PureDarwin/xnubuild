@@ -1,6 +1,17 @@
 #!/bin/bash
 
-isRunningInTravis=$1
+isRunningInTravis=false
+preclean=false
+
+while [ $# -ne 0 ]; do
+	if [ "$1" == "-travis" ]; then
+		isRunningInTravis=travis
+	elif [ "$1" == "-preclean" ]; then
+		preclean=true
+	fi
+
+	shift
+done
 
 if [ -t 1 ]; then
 	bold=$(tput bold)
@@ -63,6 +74,21 @@ print "${normal}AvailabilityVersions version:${bold} $AVAILABILITYVERSIONS_VERSI
 print "${normal}libplatform version:${bold} $LIBPLATFORM_VERSION${normal}"
 
 wait_enter
+
+if [ "$preclean" = "true" ]; then
+	print "Removing old tarballs and work directories"
+	{
+		cd $SCRIPT_DIRECTORY && \
+			rm -rf $XNU_VERSION $XNU_VERSION.tar.gz && \
+			rm -rf $LIBDISPATCH_VERSION $LIBDISPATCH_VERSION.tar.gz && \
+			rm -rf $DTRACE_VERSION $DTRACE_VERSION.tar.gz && \
+			rm -rf $AVAILABILITYVERSIONS_VERSION $AVAILABILITYVERSIONS_VERSION.tar.gz && \
+			rm -rf $LIBPLATFORM_VERSION $LIBPLATFORM_VERSION.tar.gz && \
+			rm -rf build
+	} || {
+		error "Could not remove old build artifacts, attempting to continue"
+	}
+fi
 
 print "Getting dependencies from Apple (if required)"
 {

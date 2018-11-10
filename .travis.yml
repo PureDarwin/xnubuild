@@ -2,4 +2,4 @@ language: c
 os: osx
 
 script:
- - sh xnubuild.sh travis
+ - sh xnubuild.sh -travis -preclean
