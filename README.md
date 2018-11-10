@@ -12,7 +12,7 @@ At various steps the script will ask you to press Enter to continue. If theres n
 
 The script has no build options. It always builds into the `build/` directory alongiide the script (that is, in the root of this repository).
 
-However, there is a special option (`travis`) which allows the script to be run without user-interaction (user may probably only have to type his password) and thus allowing TravisCI to complete a build.  You can leverage this functionality if you want the script to go-on by itself.
+However, there is a special option (`-travis`) which allows the script to be run without user-interaction (user may probably only have to type his password) and thus allowing TravisCI to complete a build.  You can leverage this functionality if you want the script to go-on by itself.
 
 ## Notes
 
