@@ -17,5 +17,5 @@ install :
 		echo "*** xnubuild cannot run inside of a chroot. Pass '-nochroot' flag to darwinbuild."; \
 		exit 1; \
 	fi
-	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh travis
-	@ditto $(OBJROOT)/$(XNU_VERSION).dst/* $(DSTROOT)
+	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis
+	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
