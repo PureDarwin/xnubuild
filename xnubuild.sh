@@ -52,7 +52,7 @@ print "Script by PureDarwin, version 1.0"
 print "---"
 
 XNU_VERSION=xnu-4903.221.2
-LIBDISPATCH_VERSION=libdispatch-1008.220.2
+LIBDISPATCH_VERSION=libdispatch-1121
 DTRACE_VERSION=dtrace-284.200.15
 AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-33.200.4
 LIBPLATFORM_VERSION=libplatform-177.200.16
