@@ -86,7 +86,7 @@ if [ "$preclean" = "true" ]; then
 			rm -rf $LIBPLATFORM_VERSION $LIBPLATFORM_VERSION.tar.gz && \
 			rm -rf build
 	} || {
-		error "Could not remove old build artifacts, attempting to continue"
+		error "Could not remove old build artifacts"
 	}
 fi
 
