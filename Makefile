@@ -20,3 +20,4 @@ install :
 	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
 	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
+	@ditto $(OBJROOT)/Libsyscall.sym $(SYMROOT)/Libsyscall
