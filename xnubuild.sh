@@ -131,7 +131,6 @@ print "Building dtrace"
 {
 	mkdir -p $BUILD_DIR/$DTRACE_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$DTRACE_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/dtrace/header-paths.patch && \
 		xcodebuild install -target ctfconvert -target ctfdump -target ctfmerge ARCHS="x86_64" SRCROOT=$PWD OBJROOT=$BUILD_DIR/$DTRACE_VERSION.obj SYMROOT=$BUILD_DIR/$DTRACE_VERSION.sym DSTROOT=$BUILD_DIR/$DTRACE_VERSION.dst && \
 		ditto $BUILD_DIR/$DTRACE_VERSION.dst/$XCODE_DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain $BUILD_DIR/dependencies
 } || {
@@ -160,9 +159,6 @@ print "Installing XNU & LibSyscall headers"
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/availability_versions.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_codesigning.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_dependencies_dir.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/remove-i386.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/xcode10.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/bsd-xcconfig.patch && \
 		DEPENDENCIES_DIR=$BUILD_DIR/dependencies make installhdrs SDKROOT=macosx ARCH_CONFIGS=X86_64 SRCROOT=$PWD OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst && \
 		xcodebuild installhdrs -project libsyscall/Libsyscall.xcodeproj -sdk macosx SRCROOT=$PWD/libsyscall OBJROOT=$BUILD_DIR/$XNU_VERSION.hdrs.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.hdrs.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.hdrs.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
@@ -188,12 +184,6 @@ print "Setting up libfirehose"
 {
 	mkdir -p $BUILD_DIR/$LIBDISPATCH_VERSION.{obj,sym,dst}
 	cd $SCRIPT_DIRECTORY/$LIBDISPATCH_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/header-paths.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/missing-xcconfig.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/no-werror.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/void-returns-void.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/include-standard-path.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/libfirehose/fix-xnu-linking.patch && \
 		xcodebuild install -project libdispatch.xcodeproj -target libfirehose_kernel -sdk macosx ARCHS='x86_64' SRCROOT=$PWD OBJROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.obj SYMROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.sym DSTROOT=$BUILD_DIR/$LIBDISPATCH_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies && \
 		ditto $BUILD_DIR/$LIBDISPATCH_VERSION.dst/usr/local $BUILD_DIR/dependencies/usr/local
 } || {
@@ -208,11 +198,6 @@ print "Building XNU, sudo password may be required"
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/kext_copyright_check.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_firehose_dir.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_system_framework.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/xcode9_warnings.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/invalid_assembly.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/add_missing_symbol.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix_ipsec_compilation.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make install SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0 BUILD_LTO=0
 } || {
 	error "Failed to build XNU"
@@ -224,8 +209,6 @@ print "Building Libsyscall, sudo password may be required"
 	# This phase of the build installs into the same directory as xnu proper, for ease of use with pd_update.
 	mkdir -p $BUILD_DIR/Libsyscall.{obj,sym}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall-build.patch && \
-		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall-build-more.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies RC_ProjectName=Libsyscall make install SDKROOT=macosx OBJROOT=$BUILD_DIR/Libsyscall.obj SYMROOT=$BUILD_DIR/Libsyscall.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst
 } || {
 	error "Failed to build Libsyscall"
