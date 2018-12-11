@@ -1,17 +1,17 @@
-iff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
-index 4eca357..653af06 100644
+diff --git a/makedefs/MakeInc.def b/makedefs/MakeInc.def
+index 73f7cdc..36b90c1 100644
 --- a/makedefs/MakeInc.def
 +++ b/makedefs/MakeInc.def
-@@ -356,7 +356,7 @@ LDFLAGS_KERNEL_GEN = \
- 	-Wl,-function_starts \
+@@ -422,7 +422,7 @@ LDFLAGS_KERNEL_GEN = \
  	-Wl,-headerpad,152
  
--LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel -lfirehose_kernel
-+LDFLAGS_KERNEL_SDK	= -L$(DEPENDENCIES_DIR)/usr/local/lib/kernel -lfirehose_kernel
+ # LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel -lfirehose_kernel
+-LDFLAGS_KERNEL_SDK	= -L$(SDKROOT)/usr/local/lib/kernel
++LDFLAGS_KERNEL_SDK	= -L$(DEPENDENCIES_DIR)/usr/local/lib/kernel
  
  LDFLAGS_KERNEL_RELEASE	=
  LDFLAGS_KERNEL_DEVELOPMENT     =
-@@ -464,7 +464,7 @@ INCFLAGS_IMPORT	= $(patsubst %, -I$(OBJROOT)/EXPORT_HDRS/%, $(COMPONENT_IMPORT_L
+@@ -632,7 +632,7 @@ INCFLAGS_IMPORT	= $(patsubst %, -I$(OBJROOT)/EXPORT_HDRS/%, $(COMPONENT_IMPORT_L
  INCFLAGS_EXTERN	= -I$(SRCROOT)/EXTERNAL_HEADERS
  INCFLAGS_GEN	= -I$(SRCROOT)/$(COMPONENT) -I$(OBJROOT)/EXPORT_HDRS/$(COMPONENT)
  INCFLAGS_LOCAL	= -I.
