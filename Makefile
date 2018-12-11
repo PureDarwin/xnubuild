@@ -8,7 +8,7 @@ XNU_VERSION = xnu-4903.221.2
 .DEFAULT_GOAL : install
 .PHONY : install
 install :
-	@if [ "$(SRCROOT)" == "" -o "$(DSTROOT)" = "" -o "$(OBJROOT)" = "" ]; then \
+	@if [ "$(SRCROOT)" == "" -o "$(DSTROOT)" = "" -o "$(SYMROOT)" = "" -o "$(OBJROOT)" = "" ]; then \
 		echo "*** Please run xnubuild.sh directly if building interactively."; \
 		echo "*** The Makefile is intended only for automated builds using darwinbuild."; \
 		exit 1; \
@@ -19,3 +19,4 @@ install :
 	fi
 	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
+	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
