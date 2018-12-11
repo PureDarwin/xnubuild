@@ -51,11 +51,11 @@ print "Setting up macOS OpenSource Build Environment"
 print "Script by PureDarwin, version 1.0"
 print "---"
 
-XNU_VERSION=xnu-4570.71.2
-LIBDISPATCH_VERSION=libdispatch-913.60.2
-DTRACE_VERSION=dtrace-262.50.12
-AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-32.60.1
-LIBPLATFORM_VERSION=libplatform-161.50.1
+XNU_VERSION=xnu-4903.221.2
+LIBDISPATCH_VERSION=libdispatch-1008.220.2
+DTRACE_VERSION=dtrace-284.200.15
+AVAILABILITYVERSIONS_VERSION=AvailabilityVersions-33.200.4
+LIBPLATFORM_VERSION=libplatform-177.200.16
 
 SDK_ROOT=`xcodebuild -version -sdk macosx Path`
 
