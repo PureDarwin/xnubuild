@@ -213,6 +213,7 @@ print "Building Libsyscall, sudo password may be required"
 	# This phase of the build installs into the same directory as xnu proper, for ease of use with pd_update.
 	mkdir -p $BUILD_DIR/Libsyscall.{obj,sym}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall-build.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies RC_ProjectName=Libsyscall make install SDKROOT=macosx OBJROOT=$BUILD_DIR/Libsyscall.obj SYMROOT=$BUILD_DIR/Libsyscall.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst
 } || {
 	error "Failed to build Libsyscall"
