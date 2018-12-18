@@ -2,12 +2,15 @@
 
 isRunningInTravis=false
 preclean=false
+header_only=false
 
 while [ $# -ne 0 ]; do
 	if [ "$1" == "-travis" ]; then
 		isRunningInTravis=travis
 	elif [ "$1" == "-preclean" ]; then
 		preclean=true
+	elif [ "$1" == "-header_only" ]; then
+		header_only=true
 	fi
 
 	shift
@@ -170,6 +173,12 @@ print "Installing XNU & LibSyscall headers"
 	exit 1
 }
 wait_enter
+
+if [ "$header_only" = "true" ]; then
+	echo "Stopping after xnu headers, as requested."
+	echo "Headers can be found at: $BUILD_DIR/$XNU_VERSION.hdrs.dst"
+	exit
+fi
 
 print "Setting up libplatform"
 {

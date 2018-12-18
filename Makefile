@@ -21,3 +21,17 @@ install :
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
 	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
 	@ditto $(OBJROOT)/Libsyscall.sym $(SYMROOT)/Libsyscall
+
+.PHONY : installhdrs
+installhdrs :
+	@if [ "$(SRCROOT)" == "" -o "$(DSTROOT)" = "" -o "$(SYMROOT)" = "" -o "$(OBJROOT)" = "" ]; then \
+		echo "*** Please run xnubuild.sh directly if building interactively."; \
+		echo "*** The Makefile is intended only for automated builds using darwinbuild."; \
+		exit 1; \
+	fi
+	@if [ ! -S /var/run/mDNSResponder ]; then \
+		echo "*** xnubuild cannot run inside of a chroot. Pass '-nochroot' flag to darwinbuild."; \
+		exit 1; \
+	fi
+	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis -header_only
+	@ditto $(OBJROOT)/$(XNU_VERSION).hdrs.dst $(DSTROOT)
