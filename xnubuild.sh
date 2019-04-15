@@ -211,6 +211,7 @@ print "Building XNU, sudo password may be required"
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/kext_copyright_check.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/xnu_firehose_dir.patch && \
+		patch -s -p1 < $PATCH_DIRECTORY/xnu/fix-weird-mig-error.patch && \
 		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies make install SDKROOT=macosx ARCH_CONFIGS=X86_64 KERNEL_CONFIGS=RELEASE OBJROOT=$BUILD_DIR/$XNU_VERSION.obj SYMROOT=$BUILD_DIR/$XNU_VERSION.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst DEPENDENCIES_DIR=$BUILD_DIR/dependencies BUILD_WERROR=0 BUILD_LTO=0
 } || {
 	error "Failed to build XNU"
