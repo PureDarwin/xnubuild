@@ -3,7 +3,7 @@
 # users of the xnubuild repo should use xnubuild.sh instead.
 
 # NOTE: Please keep this in sync with the corresponding variable in xnubuild.sh
-XNU_VERSION = xnu-4903.221.2
+XNU_VERSION = xnu-4903.241.1
 
 .DEFAULT_GOAL : install
 .PHONY : install
