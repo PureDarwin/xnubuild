@@ -15,6 +15,6 @@ steps:
     contents: 'build/roots/*.tar.gz'
     targetFolder: $(Build.ArtifactStagingDirectory)
 - task: PublishBuildArtifacts@1
-  name: Publish Build Artifacts
+  displayName: Publish Build Artifacts
   inputs:
-    pathToPublish: $(Build.ArtiafctStagingDirectory)
+    pathToPublish: $(Build.ArtifactStagingDirectory)
