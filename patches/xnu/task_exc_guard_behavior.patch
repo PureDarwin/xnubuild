@@ -1,0 +1,45 @@
+diff --git a/osfmk/mach/mach_types.defs b/osfmk/mach/mach_types.defs
+index dc6b2e4..09f9e95 100644
+--- a/osfmk/mach/mach_types.defs
++++ b/osfmk/mach/mach_types.defs
+@@ -272,6 +272,8 @@ type task_policy_t		= array[*:16] of integer_t;
+ type task_inspect_flavor_t = natural_t;
+ type task_inspect_info_t = array[*:4] of integer_t;
+ 
++type task_exc_guard_behavior_t = uint32_t;
++
+ type mem_entry_name_port_t = mach_port_t
+ #if     KERNEL_SERVER
+ 		intran: mem_entry_name_port_t null_conversion(mach_port_t)
+diff --git a/osfmk/mach/task_info.h b/osfmk/mach/task_info.h
+index 62824b7..b31c101 100644
+--- a/osfmk/mach/task_info.h
++++ b/osfmk/mach/task_info.h
+@@ -496,6 +496,27 @@ typedef struct task_debug_info_internal task_debug_info_internal_data_t;
+ 
+ #endif /* PRIVATE */
+ 
++/*
++ * Type to control EXC_GUARD delivery options for a task
++ * via task_get/set_exc_guard_behavior interface(s).
++ */
++typedef uint32_t task_exc_guard_behavior_t;
++
++/* EXC_GUARD optional delivery settings on a per-task basis */
++#define TASK_EXC_GUARD_VM_DELIVER            0x01 /* Deliver virtual memory EXC_GUARD exceptions */
++#define TASK_EXC_GUARD_VM_ONCE               0x02 /* Deliver them only once */
++#define TASK_EXC_GUARD_VM_CORPSE             0x04 /* Deliver them via a forked corpse */
++#define TASK_EXC_GUARD_VM_FATAL              0x08 /* Virtual Memory EXC_GUARD delivery is fatal */
++#define TASK_EXC_GUARD_VM_ALL                0x0f
++
++#define TASK_EXC_GUARD_MP_DELIVER            0x10 /* Deliver mach port EXC_GUARD exceptions */
++#define TASK_EXC_GUARD_MP_ONCE               0x20 /* Deliver them only once */
++#define TASK_EXC_GUARD_MP_CORPSE             0x40 /* Deliver them via a forked corpse */
++#define TASK_EXC_GUARD_MP_FATAL              0x80 /* mach port EXC_GUARD delivery is fatal */
++#define TASK_EXC_GUARD_MP_ALL                0xf0
++
++#define TASK_EXC_GUARD_ALL                   0xff /* All optional deliver settings */
++
+ /*
+  * Obsolete interfaces.
+  */
