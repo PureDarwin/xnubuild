@@ -3,6 +3,8 @@
 isRunningInTravis=false
 preclean=false
 header_only=false
+compress_roots=false
+separate_libsyscall=false
 
 while [ $# -ne 0 ]; do
 	if [ "$1" == "-travis" ]; then
@@ -11,6 +13,10 @@ while [ $# -ne 0 ]; do
 		preclean=true
 	elif [ "$1" == "-header_only" ]; then
 		header_only=true
+	elif [ "$1" == "-separate_libsyscall" ]; then
+		separate_libsyscall=true
+	elif [ "$1" == "-compress_roots" ]; then
+		compress_roots=true
 	fi
 
 	shift
@@ -218,18 +224,43 @@ print "Building XNU, sudo password may be required"
 	exit 1
 }
 
+libsyscall_dstroot=$BUILD_DIR/${XNU_VERSION}.dst
+if [ "$separate_libsyscall" == "true" ]; then
+	mkdir -p $BUILD_DIR/Libsyscall.dst
+	libsyscall_dstroot=$BUILD_DIR/Libsyscall.dst
+fi
+
 print "Building Libsyscall, sudo password may be required"
 {
-	# This phase of the build installs into the same directory as xnu proper, for ease of use with pd_update.
 	mkdir -p $BUILD_DIR/Libsyscall.{obj,sym}
 	cd $SCRIPT_DIRECTORY/$XNU_VERSION && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall-build.patch && \
 		patch -s -p1 < $PATCH_DIRECTORY/xnu/libsyscall-mig-flags.patch && \
-		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies RC_ProjectName=Libsyscall make install SDKROOT=macosx OBJROOT=$BUILD_DIR/Libsyscall.obj SYMROOT=$BUILD_DIR/Libsyscall.sym DSTROOT=$BUILD_DIR/$XNU_VERSION.dst
+		sudo env DEPENDENCIES_DIR=$BUILD_DIR/dependencies RC_ProjectName=Libsyscall make install SDKROOT=macosx OBJROOT=$BUILD_DIR/Libsyscall.obj SYMROOT=$BUILD_DIR/Libsyscall.sym DSTROOT=$libsyscall_dstroot
 } || {
 	error "Failed to build Libsyscall"
 	exit 1
 }
+
+if [ "$compress_roots" == "true" ]; then
+	mkdir -p $BUILD_DIR/roots
+
+	{
+		cd $BUILD_DIR/${XNU_VERSION}.dst && tar czf $BUILD_DIR/roots/xnu.root.tar.gz .
+	} || {
+		error "Failed to package xnu root"
+		exit 1
+	}
+
+	if [ "$libsyscall_dstroot" != "$BUILD_DIR/${XNU_VERSION}.dst" ]; then
+		{
+			cd $libsyscall_dstroot && tar czf $BUILD_DIR/roots/Libsyscall.root.tar.gz .
+		} || {
+			error "Failed to package Libsyscall root"
+			exit 1
+		}
+	fi
+fi
 
 print "Complete"
 
