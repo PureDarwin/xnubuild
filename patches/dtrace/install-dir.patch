@@ -1,0 +1,52 @@
+diff --git a/dtrace.xcodeproj/project.pbxproj b/dtrace.xcodeproj/project.pbxproj
+index b123feb..8812ae6 100644
+--- a/dtrace.xcodeproj/project.pbxproj
++++ b/dtrace.xcodeproj/project.pbxproj
+@@ -14037,7 +14037,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
+@@ -14072,7 +14071,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
+@@ -14109,7 +14107,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
+@@ -14143,7 +14140,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
+@@ -14212,7 +14208,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
+@@ -14247,7 +14242,6 @@
+ 					"$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders",
+ 					"compat/opensolaris/**",
+ 				);
+-				INSTALL_PATH = "$(DT_TOOLCHAIN_DIR)/usr/local/bin";
+ 				OTHER_CFLAGS = (
+ 					"-D_INT64_TYPE",
+ 					"-D_LONGLONG_TYPE",
