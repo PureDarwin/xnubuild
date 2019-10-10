@@ -7,14 +7,13 @@ pool:
 steps:
 - bash: ./xnubuild.sh -travis -compress_roots -separate_libsyscall
   displayName: Run xnubuild.sh
-  workingDirectory: $(Build.SourceDirectory)
   continueOnError: false
 - task: CopyFiles@2
   displayName: Copy Build Outputs
   inputs:
-    SourceFolder: '$(Build.SourceDirectory)/build/roots'
+    SourceFolder: build/roots
     Contents: '*.tar.gz'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: $(Build.ArtifactStagingDirectory)
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts
   inputs:
