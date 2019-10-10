@@ -1,0 +1,20 @@
+pr:
+- master
+
+pool:
+    vmImage: 'macOS 10.14'
+
+steps:
+- bash: ./xnubuild.sh -travis -compress_roots -separate_libsyscall
+  displayName: Run xnubuild.sh
+  workingDirectory: $(Build.SourceDirectory)
+  continueOnError: false
+- task: CopyFiles@2
+  displayName: Copy Build Outputs
+  inputs:
+    contents: 'build/roots/*.tar.gz'
+    targetFolder: $(Build.ArtifactStagingDirectory)
+- task: PublishBuildArtifacts@1
+  displayName: Publish Build Artifacts
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
