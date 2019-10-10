@@ -6,7 +6,7 @@ A script by the PureDarwin project for setting up a macOS development environmen
 
 	./xnubuild.sh
 
-After each build step completesthe script will ask you to press Enter to continue. If you encounter problems, you can press Ctrl+C at these points to halt the build process. If you find you need to do this, please raise an issue in the issue tracker with any relevant information.
+After each build step completes, the script will ask you to press Enter to continue. If you encounter problems, you can press Ctrl+C at these points to halt the build process. If you find you need to do this, please raise an issue in the issue tracker with any relevant information.
 
 Please do not attempt to use the Makefile in this repository to build XNU; it is present only for integration with the [darwinbuild](https://github.com/PureDarwin/darwinbuild) program and is not meant for general use. It only calls through into `xnubuild.sh` anyways.
 
