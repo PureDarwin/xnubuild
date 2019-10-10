@@ -12,9 +12,12 @@ steps:
 - task: CopyFiles@2
   displayName: Copy Build Outputs
   inputs:
-    contents: 'build/roots/*.tar.gz'
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    SourceFolder: '$(Build.SourceDirectory)/build/roots'
+    Contents: '*.tar.gz'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifacts
   inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'roots'
+    publishLocation: 'Container'
