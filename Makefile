@@ -17,10 +17,15 @@ install :
 		echo "*** xnubuild cannot run inside of a chroot. Pass '-nochroot' flag to darwinbuild."; \
 		exit 1; \
 	fi
-	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis
+	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis -separate_libsyscall
+ifeq ($(RC_ProjectName),xnu)
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
 	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
-	@ditto $(OBJROOT)/Libsyscall.sym $(SYMROOT)/Libsyscall
+endif
+ifeq ($(RC_ProjectName),Libsyscall)
+	@ditto $(OBJROOT)/Libsyscall.dst $(DSTROOT)
+	@ditto $(OBJROOT)/Libsyscall.sym $(SYMROOT)
+endif
 
 .PHONY : installhdrs
 installhdrs :
