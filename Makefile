@@ -21,6 +21,15 @@ install :
 ifeq ($(RC_ProjectName),xnubuild)
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
 	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
+
+	@mkdir -p $(OBJROOT)/libkmod.obj $(OBJROOT)/libkmod.sym
+	cd $(SRCROOT)/$(XNU_VERSION) && patch -p1 -i $(SRCROOT)/patches/xnu/libkmod.patch
+	make -C $(SRCROOT)/$(XNU_VERSION) RC_ProjectName=libkmod \
+		SRCROOT=$(SRCROOT)/$(XNU_VERSION) \
+		OBJROOT=$(OBJROOT)/libkmod.obj \
+		SYMROOT=$(OBJROOT)/libkmod.sym \
+		DSTROOT=$(DSTROOT)
+	ditto $(OBJROOT)/libkmod.sym $(SYMROOT)/libkmod
 endif
 ifeq ($(RC_ProjectName),Libsyscall)
 	@ditto $(OBJROOT)/Libsyscall.dst $(DSTROOT)
