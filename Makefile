@@ -18,7 +18,7 @@ install :
 		exit 1; \
 	fi
 	@BUILD_DIR=$(OBJROOT) $(SRCROOT)/xnubuild.sh -travis -separate_libsyscall
-ifeq ($(RC_ProjectName),xnu)
+ifeq ($(RC_ProjectName),xnubuild)
 	@ditto $(OBJROOT)/$(XNU_VERSION).dst $(DSTROOT)
 	@ditto $(OBJROOT)/$(XNU_VERSION).sym $(SYMROOT)
 endif
